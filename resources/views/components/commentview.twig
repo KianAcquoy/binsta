@@ -1,0 +1,26 @@
+{% if user() %}
+<div class="w-full border-b border-t border-gray-300 mb-2">
+	<form action="/comments/post" method="post">
+        <input type="hidden" name="post_id" value="{{ post.id }}">
+        <input type="hidden" name="user_id" value="{{ user().id }}">
+		<div class="flex items-center justify-between">
+			<input type="text" name="comment" class="w-full h-[7vh] py-2 text-sm text-gray-900 placeholder-gray-400 border-none focus:ring-0" placeholder="Add a comment...">
+			<button type="submit" class="px-4 text-blue-500 hover:text-blue-700">Post</button>
+		</div>
+	</form>
+</div>
+{% endif %}
+{% if comments|length == 0 %}
+<div class="text-gray-700 text-sm my-1">
+    No comments yet...
+</div>
+{% endif %}
+{% for comment in comments %}
+    {% set user = users[comment['user_id']] %}
+	<div class="text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md text-sm my-1 p-2">
+		<span class="text-gray-900 font-bold pr-1">
+			<a href="/users/{{ user['username'] }}">{{ user['username'] }}</a>
+		</span>
+		{{ comment['content'] }}<br><span class="text-gray-400 text-xs">{{ comment.created_at|ago }}</span>
+	</div>
+{% endfor %}

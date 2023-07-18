@@ -1,0 +1,58 @@
+{% set userlikepostes = checkLiked(user()['id'], post.id) %}
+{% set authuser = user() %}
+{% set likes = likes(post.id) %}
+<div class="bg-white border border-gray-300 rounded-lg mb-4 md:w-[65vw] w-[85vw] py-2 md:select-auto select-none">
+	<div class="flex items-center mb-2 p-2 px-4">
+		<a href="/users/{{ user.username }}">
+			<div class="w-9 h-9 rounded-full bg-gray-600 bg-cover bg-center" style="background-image: url('{{ user.avatar }}')"></div>
+		</a>
+		<span class="text-gray-900 pl-2 text-md font-semibold">
+			<a href="/users/{{ user.username }}">{{ user.username }}</a>
+		</span>
+		<span class="pl-1 text-sm text-gray-800">•</span>
+		<span class="pl-1 text-sm text-gray-500">{{ post.language|lower }}</span>
+		<span class="pl-1 text-sm text-gray-800">•</span>
+		<span class="pl-1 text-sm text-gray-500" title="{{ post.created_at | date }}">{{ post.created_at|ago_single }}</span>
+	</div>
+	<div class="mb-2 select-auto">
+		<pre class="whitespace-pre-wrap break"><code class="hljs language-{{ post.language }}">{{ post.content }}</code></pre>
+	</div>
+	<div class="content flex flex-col px-4">
+		<div class="actionbar flex flex-row">
+            <div id="likebutton-{{ post.id }}">
+            {% if authuser %}
+                {% if userlikepostes %}
+                    <img onclick="changeLike({{ post.id }}, 'unlike')" src="/resources/icons/heart-filled.svg" alt="likebutton" class="w-6 h-6">
+                {% else %}
+                    <img onclick="changeLike({{ post.id }}, 'like')" src="/resources/icons/heart.svg" alt="likebutton" class="w-6 h-6">
+                {% endif %}
+            {% else %}
+                <img src="/resources/icons/heart.svg" alt="likebutton" class="w-6 h-6">
+            {% endif %}
+            
+            </div>
+            
+			<img onclick="openPopup('/comments/view/{{ post.id }}', 'Comments')" src="/resources/icons/comment.svg" alt="comment" class="w-6 h-6 ml-2 cursor-pointer">
+		</div>
+		<div class="statbar">
+            <div onclick="openPopup('/likes/view/{{ post.id }}', 'Likes')" class="text-gray-900 text-sm pt-1 cursor-pointer">This post is liked by
+                <span class="font-bold" id="likecount-{{ post.id }}">{{ likes | length }}</span>
+                people
+            </div>
+		</div>
+		<div class="text-gray-700 text-sm py-1">
+            <div class="w-full break-words">
+                <span class="text-gray-900 font-bold">
+                    <a href="/users/{{ user.username }}">{{ user.username }}</a>
+                </span>
+			    {{ post.caption }}
+            </div>
+		</div>
+		<div class="text-gray-500 text-sm cursor-pointer" onclick="openPopup('/comments/view/{{ post.id }}', 'Comments')">View all comments</div>
+	</div>
+</div>
+{% if showComments %}
+	<script>
+		openPopup('/comments/view/{{ post.id }}', 'Comments');
+	</script>
+{% endif %}

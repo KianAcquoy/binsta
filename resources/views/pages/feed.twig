@@ -1,0 +1,10 @@
+{% extends "layouts/app.twig" %}
+
+{% block content %}
+
+<div class="w-fit py-2">
+    {% for post in posts %}
+        {% include "components/post/normal.twig" with {'user': users[post.user_id], 'post': post} %}
+    {% endfor %}
+</div>
+{% endblock %}

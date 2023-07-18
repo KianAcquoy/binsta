@@ -1,0 +1,15 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Controllers\\": "app/controllers/",
+            "Helpers\\": "app/helpers/",
+            "Database\\": "database/",
+            "Auth\\": "app/auth/"
+        }
+    },
+    "require": {
+        "twig/twig": "^2.0",
+        "gabordemooij/redbean": "^5.7",
+        "fakerphp/faker": "^1.22"
+    }
+}

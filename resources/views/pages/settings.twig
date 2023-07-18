@@ -1,0 +1,57 @@
+{% extends "layouts/app.twig" %}
+
+{% set title = user['username'] %}
+{% set searchbar = user['username'] %}
+
+{% block scripts %}
+    {% if user['id'] == user()['id'] %}
+        <script src="/resources/js/settings.js" defer></script>
+    {% endif %}
+    <script>
+        function updateImage(obj) {
+            let imageurl = URL.createObjectURL(obj.files[0]);
+            document.getElementById('avatarimage').src = imageurl;
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+
+	<div class="w-fit py-2">
+		<form action="/users/{{ user['username'] }}/update" method="POST" class="md:w-[600px] w-[375px]" enctype="multipart/form-data">
+			<div class="flex items-center pl-[10px] py-[10px] mb-2">
+                <div class="relative md:w-[100px] w-[80px] md:h-[100px] h-[80px]">
+                    <div class="rounded-full w-full h-full overflow-hidden">
+                        <img src="{{ user['avatar'] }}" alt="avatar" id="avatarimage" class="w-full h-full object-cover">
+                    </div>
+                    <div class="absolute right-0 bottom-0 bg-white p-2 rounded-full m-auto cursor-pointer" onclick="uploadAvatar()">
+                        <img src="/resources/icons/pen-square.svg" alt="edit" class="md:h-6 h-5" id="editavatar">
+                    </div>
+                    <input type="file" name="avatar" id="avatar" accept="image/png, image/jpeg, image/jpg" onchange="updateImage(this)" hidden>
+                </div>
+				<div class="ml-4">
+                    <div onclick="this.closest('form').submit();" class="md:absolute fixed md:right-0 right-10 z-10 md:bottom-auto bottom-[7vh] shadow-xl cursor-pointer bg-white hover:bg-gray-50 p-3 rounded-full"><img class="md:h-7 h-10" src="/resources/icons/check.svg" alt="save"></div>
+                    <input type="text" id="username" name="username" class="w-full resize-none rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" spellcheck="false" placeholder="Username" id="username" value="{% if old['username'] %}{{ old['username'] }}{% else %}{{ user['username'] }}{% endif %}">
+                    {% if errors['username'] %}
+                        <p class="text-red-500 text-sm">{{ errors['username'] }}</p>
+                    {% endif %}
+                    <a href="/update-password"><p class="text-blue-800 underline font-semibold text-sm">Change password?</p></a>                    
+				</div>
+			</div>
+            <div class="flex items-center mb-1">
+                <textarea id="biography" name="biography" class="w-full resize-none rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" spellcheck="false" placeholder="Biography" id="biography">{{ user['biography'] }}</textarea>
+            </div>
+            
+			<div class="flex flex-wrap">
+				{% for post in posts %}
+                    <div class="w-fit h-fit relative">
+					    {% include 'components/post/small.twig' with { post: post, editmode: true } %}
+                        <div class="hover:scale-[120%] absolute right-0 top-0 p-2 shadow-xl border border-gray-400 bg-white rounded-full cursor-pointer" style="transition-property: transform; transition: .1s ease-in-out;" onclick="openPopup('/posts/{{ post.id }}/confirm-delete', 'Deletion')">
+                            <img src="/resources/icons/trash.svg" alt="delete" class="md:h-6 h-5">
+                        </div>
+                    </div>
+				{% endfor %}
+			</div>
+		</form>
+	</div>
+{% endblock %}

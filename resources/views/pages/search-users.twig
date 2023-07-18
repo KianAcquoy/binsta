@@ -1,0 +1,23 @@
+{% extends "layouts/app.twig" %}
+
+{% set title = 'Search' %}
+{% set searchbar = query %}
+
+{% block content %}
+    {% if users|length == 0 %}
+        No users found...
+    {% else %}
+        <div class="py-2">
+        {% for user in users %}
+            <a href="/users/{{ user['username'] }}">
+                <div class="text-gray-700 text-xl my-3 bg-gray-100 hover:bg-gray-200 rounded-md p-5">
+                    <div class="text-gray-900 font-bold pr-2 flex flex-row items-center">
+                        <div class="w-12 h-12 rounded-full bg-gray-600 bg-cover bg-center" style="background-image: url('{{ user.avatar }}')"></div>
+                        <div class="pl-2">{{ user['username'] }}</div>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

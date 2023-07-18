@@ -1,0 +1,34 @@
+{% extends "layouts/app.twig" %}
+
+{% set title = 'Login' %}
+{% set hidenav = true %}
+
+{% block content %}
+	<div class="h-full w-full flex flex-col justify-center align-center">
+		<div class="h-screen bg-gray-50 flex flex-col justify-center items-center">
+			<div class="bg-white border border-gray-300 w-80 py-8 flex items-center flex-col mb-3">
+				<h1 class="text-2xl font-semibold">Binsta</h1>
+				<form class="mt-8 w-64 flex flex-col" method="POST" action="/authenticate">
+					<input autofocus class="text-xs w-full mb-2 rounded border bg-gray-100 border-gray-300 px-2 py-2 focus:outline-none focus:border-gray-400 active:outline-none" id="username" placeholder="Username" name="username" type="text">
+					<input autofocus class="text-xs w-full mb-4 rounded border bg-gray-100 border-gray-300 px-2 py-2 focus:outline-none focus:border-gray-400 active:outline-none" id="password" placeholder="Password" name="password" type="password">
+                    <button type="submit" class="text-sm text-center bg-blue-500 text-white py-1 rounded font-medium">
+                        Log In
+                    </button>
+				</form>
+                {% if session['error'] %}
+                    <div class="text-red-500 text-sm mt-2">
+                        {{ session['error'] }}
+                    </div>
+                {% endif %}
+                
+			</div>
+			<div class="bg-white border border-gray-300 text-center w-80 py-4 mb-3">
+				<span class="text-sm">Don't have an account?</span>
+				<a class="text-blue-500 text-sm font-semibold" href="/register">Sign up</a>
+			</div>
+            <div class="bg-white border border-gray-300 text-center px-5 py-4">
+				<a class="text-blue-500 text-sm font-semibold" href="/">Continue without account</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}

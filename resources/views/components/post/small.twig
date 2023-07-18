@@ -1,0 +1,15 @@
+{% if editmode != true %}
+<a href="/posts/{{ post['id'] }}">
+{% endif %}
+    {% if editmode != true %}
+	<div class="hover:scale-110 md:h-[180px] h-[115px] md:w-[180px] w-[115px] md:m-[10px] m-[5px] bg-gray-200 overflow-hidden shadow-md select-none" style="transition-property: transform; transition: .1s ease-in-out;">
+    {% else %}
+    <div class="md:h-[180px] h-[115px] md:w-[180px] w-[115px] md:m-[10px] m-[5px] bg-gray-200 overflow-hidden shadow-md select-none">
+    {% endif %}
+		<div class="p-[0.5vw]">
+			{{ post['content'] }}
+		</div>
+	</div>
+{% if editmode != true %}
+</a>
+{% endif %}

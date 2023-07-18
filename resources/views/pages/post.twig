@@ -1,0 +1,10 @@
+{% extends "layouts/app.twig" %}
+
+{% set searchbar = user['username'] %}
+{% block content %}
+
+<div class="w-fit py-2">
+    {% include "components/post/normal.twig" with {'user': user, 'post': post} %}
+</div>
+
+{% endblock %}
