@@ -25,8 +25,8 @@ class PostSeeder extends Seeder
         $faker = Faker::create();
         $data = [];
         for ($userid = 1; $userid <= 15; $userid++) {
-            $randomsnippet = PostSeeder::getRandomSnippet();
             for ($i = 0; $i < 2; $i++) {
+                $randomsnippet = PostSeeder::getRandomSnippet();
                 $data[] = [
                     'user_id' => $userid,
                     'content' => file_get_contents($randomsnippet),
