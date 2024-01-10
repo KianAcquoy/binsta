@@ -26,3 +26,16 @@ The main features include:
 7. Create a database called "binsta"
 8. Run the seeder (php cmd/seed.php -s=all -r)
 9. Start the project
+
+You can log in to all seeder accounts using their username and 'password' as password.
+
+## **Images**
+
+![image](https://github.com/KianAcquoy/binsta/assets/118724608/02841dd2-b0ad-49d9-97c2-c04df0e69b7e)
+![image](https://github.com/KianAcquoy/binsta/assets/118724608/f7385415-1a3b-4adf-af8d-3119f22e44ba)
+![image](https://github.com/KianAcquoy/binsta/assets/118724608/1add7b26-f015-4410-a556-c013cee98962)
+![image](https://github.com/KianAcquoy/binsta/assets/118724608/79d48bcb-399e-4547-a371-edd8e56a5523)
+
+
+
+
